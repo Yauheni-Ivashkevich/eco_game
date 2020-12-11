@@ -18,6 +18,11 @@ class BinSprite(games.Sprite):
 эти методы в вашем подклассе и позволяет заменить какие-то суперклассы с минимальными изменениями кода"""
 
 """Добавляем описание для каждой карзины"""
-bin_organic = BinSprite(x=100, type_name='organic')
+bin_banana = BinSprite(x=100, type_name='banana')
 bin_bottle = BinSprite(x=300, type_name='bottle')
 bin_paper = BinSprite(x=510, type_name='paper')
+
+
+games.screen.add(bin_banana)
+games.screen.add(bin_bottle)
+games.screen.add(bin_paper)
