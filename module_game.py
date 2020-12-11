@@ -1,3 +1,5 @@
+from random import randint
+
 from superwires import games
 
 games.init(screen_width=604, screen_height=377, fps=50)
@@ -27,7 +29,17 @@ class WasteSprite(games.Sprite):
 """Это логика игры, действие в отношение поступающего мусора"""
 class WasteBuilderSprite(games.Sprite):
     def __init__(self):
+        self.passed_frame = 0
+        self.created_waste = 0
         super(WasteBuilderSprite, self).__init__(image=bin_image, x=x, y=300)
+
+"""Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
+и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого , что наш"""
+    def update(self):
+        if self.passed_frame == 0:
+            self.created_waste += 1
+            new_waste = random_waste()
+
 
 
 """Добавляем описание для каждой карзины"""
@@ -36,6 +48,26 @@ bin_bottle = BinSprite(x=300, type_name='bottle')
 bin_paper = BinSprite(x=510, type_name='paper')
 
 builder = WasteBuilderSprite()
+
+def random_waste():
+    value = randint(1, 3)
+
+    if value == 1:
+        return banana_waste()
+    elif value == 2:
+        return bottle_waste()
+    else:
+        return paper_waste()
+
+
+def banana_waste():
+    return WasteSprite(image=games.load_image('banana_2.png'), type_name='banana')
+
+def bottle_waste():
+    return WasteSprite(image=games.load_image('bottle_2.png'), type_name='bottle')
+
+def paper_waste():
+    return WasteSprite(image=games.load_image('text-document_2.png'), type_name='paper')
 
 
 games.screen.add(bin_banana)
