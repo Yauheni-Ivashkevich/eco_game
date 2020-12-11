@@ -31,15 +31,17 @@ class WasteBuilderSprite(games.Sprite):
     def __init__(self):
         self.passed_frame = 0
         self.created_waste = 0
+        self.visible_waste = []
         super(WasteBuilderSprite, self).__init__(image=bin_image, x=x, y=300)
 
-"""Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
-и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого , что наш"""
     def update(self):
         if self.passed_frame == 0:
             self.created_waste += 1
             new_waste = random_waste()
-
+            self.visible_waste.append(new_waste)
+            games.screen.add(new_waste)
+"""Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
+и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого"""
 
 
 """Добавляем описание для каждой карзины"""
