@@ -18,21 +18,37 @@ class BinSprite(games.Sprite):
         self.type_name = type_name
         super(BinSprite, self).__init__(image=bin_image, x=-200, y=-200)
 
+    def handled_click(self):
+        if len(builder.visible_waste) > 0:
+
+            lowest_waste = builder
+
+    def update(self):
+        overlapping_sprites = self.get.overlapping_sprites()
+
+        for sprite in overlapping_sprites:
+            if sprite.type_name != self.type_name:
+                games.screen.quite()
+"""Если мусор коснулся не правильно крзины, то нам необходимо выйти из игры"""
+
 
 """Описание класса мусора. И если type_name подходит, то мы правильно выбрали карзину, а если нет - конец игры"""
 class WasteSprite(games.Sprite):
     def __init__(self, image, type_name):
         self.type_name = type_name
-        super(WasteSprite, self).__init__(image=image, x=games.screen.width / 2, y=games.height - 417, dx=0, dy=2)
+        super(WasteSprite, self).__init__(image=image, x=games.screen.width / 2, y=games.screen.height - 417, dx=0, dy=2)
 
 
 """Это логика игры, действие в отношение поступающего мусора"""
 class WasteBuilderSprite(games.Sprite):
     def __init__(self):
+        self.in_removal_mode = False
+        self.click_was_hand = False
+        self.frames_interval = 60
         self.passed_frame = 0
         self.created_waste = 0
         self.visible_waste = []
-        super(WasteBuilderSprite, self).__init__(image=bin_image, x=x, y=300)
+        super(WasteBuilderSprite, self).__init__(image=bin_image, x=-200, y=300)
 
     def update(self):
         if self.passed_frame == 0:
@@ -40,6 +56,31 @@ class WasteBuilderSprite(games.Sprite):
             new_waste = random_waste()
             self.visible_waste.append(new_waste)
             games.screen.add(new_waste)
+
+        self.passed_frame += 1
+
+        if self.passed_frame == self.frames_interval:
+            self.passed_frame == 0
+
+        if games.mouse.is_pressed(0):
+            if self.in_removal_mode is False:
+                self.in_removal_mode = True
+                self.click_was_handled = False
+
+        elif self.click_was_handled:
+            self.in_removal_mode = False
+
+        if self.in_removal_mode and self.click_was_handled is False:
+            if check_point(games.mouse.x, games.mouse.y, bin_banana):
+                bin_banana.handle_click()
+            elif check_point(games.mouse.x, games.mouse.y, bin_bottle):
+                bin_bottle.handle_click()
+            elif check_point(games.mouse.x, games.mouse.y, bin_paper):
+                bin_paper.handle_click()
+
+            self.click_was_handled = True
+
+
 """Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
 и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого"""
 
@@ -50,6 +91,11 @@ bin_bottle = BinSprite(x=300, type_name='bottle')
 bin_paper = BinSprite(x=510, type_name='paper')
 
 builder = WasteBuilderSprite()
+
+
+def check_point(x, y, sprite):
+    return sprite.left <= x <= sprite.right and sprite.top <= y <= sprite.bottom
+
 
 def random_waste():
     value = randint(1, 3)
