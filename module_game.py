@@ -16,15 +16,17 @@ bin_image = games.load_image('bin_1.png')
 class BinSprite(games.Sprite):
     def __init__(self, x, type_name):
         self.type_name = type_name
-        super(BinSprite, self).__init__(image=bin_image, x=-200, y=-200)
+        super(BinSprite, self).__init__(image=bin_image, x=x, y=-200)
 
-    def handled_click(self):
+    def handle_click(self):
         if len(builder.visible_waste) > 0:
-
-            lowest_waste = builder
+            lowest_waste = builder.visible_waste[0]
+            if lowest_waste.type_name == self.type_name:
+                builder.visible_waste.remove(lowest_waste)
+                games.screen.remove(lowest_waste)
 
     def update(self):
-        overlapping_sprites = self.get.overlapping_sprites()
+        overlapping_sprites = self.get_overlapping_sprites()
 
         for sprite in overlapping_sprites:
             if sprite.type_name != self.type_name:
@@ -43,7 +45,7 @@ class WasteSprite(games.Sprite):
 class WasteBuilderSprite(games.Sprite):
     def __init__(self):
         self.in_removal_mode = False
-        self.click_was_hand = False
+        self.click_was_handled = False
         self.frames_interval = 60
         self.passed_frame = 0
         self.created_waste = 0
@@ -81,6 +83,7 @@ class WasteBuilderSprite(games.Sprite):
             self.click_was_handled = True
 
 
+
 """Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
 и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого"""
 
@@ -111,8 +114,10 @@ def random_waste():
 def banana_waste():
     return WasteSprite(image=games.load_image('banana_2.png'), type_name='banana')
 
+
 def bottle_waste():
     return WasteSprite(image=games.load_image('bottle_2.png'), type_name='bottle')
+
 
 def paper_waste():
     return WasteSprite(image=games.load_image('text-document_2.png'), type_name='paper')
