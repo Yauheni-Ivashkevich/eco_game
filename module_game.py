@@ -2,13 +2,15 @@ from random import randint
 
 from superwires import games
 
-games.init(screen_width=604, screen_height=377, fps=50)
+games.init(screen_width=600, screen_height=377, fps=50)
 """background"""
 wall_image = games.load_image('background_1.jpg', transparent=False)
 games.screen.background = wall_image
 
-"""Картинка корзины, кот. предполоительно может быть разной"""
+
 bin_image = games.load_image('bin_1.png')
+"""Картинка корзины, кот. предполоительно может быть разной"""
+
 
 """super возвращает временный объект супер класса, кот. позволяет вызвать метод суперкласса, 
 вызов ранее созданных методов с помощью super, избавляет вас от необходимости переписывать 
@@ -16,7 +18,7 @@ bin_image = games.load_image('bin_1.png')
 class BinSprite(games.Sprite):
     def __init__(self, x, type_name):
         self.type_name = type_name
-        super(BinSprite, self).__init__(image=bin_image, x=x, y=-200)
+        super(BinSprite, self).__init__(image=bin_image, x=x, y=350)
 
     def handle_click(self):
         if len(builder.visible_waste) > 0:
@@ -50,7 +52,7 @@ class WasteBuilderSprite(games.Sprite):
         self.passed_frame = 0
         self.created_waste = 0
         self.visible_waste = []
-        super(WasteBuilderSprite, self).__init__(image=bin_image, x=-200, y=300)
+        super(WasteBuilderSprite, self).__init__(image=bin_image, x=-200, y=-200)
 
     def update(self):
         if self.passed_frame == 0:
@@ -63,6 +65,13 @@ class WasteBuilderSprite(games.Sprite):
 
         if self.passed_frame == self.frames_interval:
             self.passed_frame == 0
+
+        if self.created_waste == 20:
+            self.frames_interval = 45
+        elif self.created_waste == 40:
+            self.frames_interval = 30
+        elif self.created_waste == 60:
+            self.frames_interval = 20
 
         if games.mouse.is_pressed(0):
             if self.in_removal_mode is False:
