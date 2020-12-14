@@ -18,7 +18,7 @@ bin_image = games.load_image('bin_1.png')
 class BinSprite(games.Sprite):
     def __init__(self, x, type_name):
         self.type_name = type_name
-        super(BinSprite, self).__init__(image=bin_image, x=x, y=350)
+        super(BinSprite, self).__init__(image=bin_image, x=x, y=300)
 
     def handle_click(self):
         if len(builder.visible_waste) > 0:
