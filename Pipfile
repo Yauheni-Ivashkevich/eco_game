@@ -7,8 +7,8 @@ verify_ssl = true
 superwires = "*"
 
 [packages]
-superwires = "*"
 pygame = "*"
+superwires = "*"
 
 [requires]
 python_version = "3.7"
