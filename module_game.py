@@ -9,12 +9,8 @@ games.screen.background = wall_image
 
 
 bin_image = games.load_image('bin_1.png')
-"""Картинка корзины, кот. предполоительно может быть разной"""
 
 
-"""super возвращает временный объект супер класса, кот. позволяет вызвать метод суперкласса, 
-вызов ранее созданных методов с помощью super, избавляет вас от необходимости переписывать 
-эти методы в вашем подклассе и позволяет заменить какие-то суперклассы с минимальными изменениями кода"""
 class BinSprite(games.Sprite):
     def __init__(self, x, type_name):
         self.type_name = type_name
@@ -34,17 +30,13 @@ class BinSprite(games.Sprite):
             if sprite.type_name != self.type_name:
                 games.screen.quite()
 
-"""Если мусор коснулся неправильной корзины, то нам необходимо выйти из игры"""
 
-
-"""Описание класса мусора. И если type_name подходит, то мы правильно выбрали карзину, а если нет - конец игры"""
 class WasteSprite(games.Sprite):
     def __init__(self, image, type_name):
         self.type_name = type_name
         super(WasteSprite, self).__init__(image=image, x=games.screen.width / 2, y=games.screen.height - 417, dx=0, dy=2)
 
 
-"""Это логика игры, действие в отношение поступающего мусора"""
 class WasteBuilderSprite(games.Sprite):
     def __init__(self):
         self.in_removal_mode = False
@@ -54,6 +46,7 @@ class WasteBuilderSprite(games.Sprite):
         self.created_waste = 0
         self.visible_waste = []
         super(WasteBuilderSprite, self).__init__(image=bin_image, x=-200, y=-200)
+
 
     def update(self):
         if self.passed_frame == 0:
@@ -93,12 +86,6 @@ class WasteBuilderSprite(games.Sprite):
             self.click_was_handled = True
 
 
-
-"""Отвечает за главные изменения в Builder, проврить сколько прошло фрэймов, 
-и сколько за фрэйм создано мусора, сколько было создано нового мусора, и не было ли такого"""
-
-
-"""Добавляем описание для каждой карзины"""
 bin_banana = BinSprite(x=100, type_name='banana')
 bin_bottle = BinSprite(x=300, type_name='bottle')
 bin_paper = BinSprite(x=510, type_name='paper')
