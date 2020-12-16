@@ -3,11 +3,9 @@ from random import randint
 from superwires import games
 
 games.init(screen_width=600, screen_height=377, fps=50)
-"""background"""
+
 wall_image = games.load_image('background_1.jpg', transparent=False)
 games.screen.background = wall_image
-
-
 bin_image = games.load_image('bin_1.png')
 
 
