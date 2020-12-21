@@ -61,9 +61,9 @@ class WasteBuilderSprite(games.Sprite):
         if self.created_waste == 20:
             self.frames_interval = 45
         elif self.created_waste == 40:
-            self.frames_interval = 30
+            self.frames_interval = 35
         elif self.created_waste == 60:
-            self.frames_interval = 20
+            self.frames_interval = 25
 
         if games.mouse.is_pressed(0):
             if self.in_removal_mode is False:
