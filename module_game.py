@@ -74,8 +74,8 @@ class WasteBuilderSprite(games.Sprite):
             self.in_removal_mode = False
 
         if self.in_removal_mode and self.click_was_handled is False:
-            if check_point(games.mouse.x, games.mouse.y, bin_banana):
-                bin_banana.handle_click()
+            if check_point(games.mouse.x, games.mouse.y, bin_organic):
+                bin_organic.handle_click()
             elif check_point(games.mouse.x, games.mouse.y, bin_bottle):
                 bin_bottle.handle_click()
             elif check_point(games.mouse.x, games.mouse.y, bin_paper):
@@ -84,7 +84,7 @@ class WasteBuilderSprite(games.Sprite):
             self.click_was_handled = True
 
 
-bin_banana = BinSprite(x=100, type_name='banana')
+bin_organic = BinSprite(x=100, type_name='organic')
 bin_bottle = BinSprite(x=300, type_name='bottle')
 bin_paper = BinSprite(x=510, type_name='paper')
 
@@ -99,15 +99,15 @@ def random_waste():
     value = randint(1, 3)
 
     if value == 1:
-        return banana_waste()
+        return organic_waste()
     elif value == 2:
         return bottle_waste()
     else:
         return paper_waste()
 
 
-def banana_waste():
-    return WasteSprite(image=games.load_image('banana_2.png'), type_name='banana')
+def organic_waste():
+    return WasteSprite(image=games.load_image('organic_2.png'), type_name='organic')
 
 
 def bottle_waste():
@@ -118,7 +118,7 @@ def paper_waste():
     return WasteSprite(image=games.load_image('text-document_2.png'), type_name='paper')
 
 
-games.screen.add(bin_banana)
+games.screen.add(bin_organic)
 games.screen.add(bin_bottle)
 games.screen.add(bin_paper)
 games.screen.add(builder)
