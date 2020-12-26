@@ -9,6 +9,7 @@ superwires = "*"
 [packages]
 pygame = "*"
 superwires = "*"
+black = "==20.8b1"
 
 [requires]
 python_version = "3.7"
